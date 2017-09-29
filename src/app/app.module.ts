@@ -3,13 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 
 import { AppComponent }  from './app.component';
+import { RunningTimeboxComponent } from './running-timebox.component';
 
 @NgModule({
   imports:      [ 
 	BrowserModule,
     FormsModule
   ],
-  declarations: [ AppComponent ],
+  declarations: [ 
+	AppComponent,
+	RunningTimeboxComponent
+  ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
