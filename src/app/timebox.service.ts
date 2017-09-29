@@ -10,7 +10,6 @@ export class TimeboxService {
 	}
 	
 	getTimeboxBySeconds(seconds: number): Promise<Timebox> {
-		return this.getDefaultTimeboxes()
-					. then(timeboxes => timeboxes.find(timebox => timebox.seconds === seconds));
+		return Promise.resolve(Timebox.fromSeconds(seconds));
 	}
 }
