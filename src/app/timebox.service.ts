@@ -8,4 +8,9 @@ export class TimeboxService {
 	getDefaultTimeboxes(): Promise<Timebox[]> {
 		return Promise.resolve(TIMEBOXES);
 	}
+	
+	getTimeboxBySeconds(seconds: number): Promise<Timebox> {
+		return this.getDefaultTimeboxes()
+					. then(timeboxes => timeboxes.find(timebox => timebox.seconds === seconds));
+	}
 }
