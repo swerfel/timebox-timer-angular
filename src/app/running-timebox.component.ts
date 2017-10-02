@@ -5,6 +5,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 
 import { Timebox } from './timebox';
+import { PointInTime } from './point-in-time';
+import { Duration } from './duration';
 import { TimeboxService } from './timebox.service';
 
 
@@ -17,9 +19,9 @@ const TIMEOUT_OFFSET_IN_SECONDS = 60;
 })
 export class RunningTimeboxComponent implements OnInit{
 	timebox: Timebox;
-	startTime: Date;
+	startTime: PointInTime;
 	remainingTime: string;
-	remainingSeconds: number;
+	remainingDuration: Duration;
 	percentsRemaining: string;
 	
 	constructor(
@@ -35,7 +37,7 @@ export class RunningTimeboxComponent implements OnInit{
 	}
 	
 	startTimebox(newTimebox: Timebox): void {
-		console.log('Starting timebox of '+newTimebox.humanReadableText);
+		console.log('Starting timebox of '+newTimebox.getHumanReadableText());
 		this.timebox = newTimebox;
 		this.startTime = this.currentTime();
 		this.refreshRemainingTime();
@@ -43,16 +45,15 @@ export class RunningTimeboxComponent implements OnInit{
 	}
 	
 	refreshRemainingTime(): void {
-		let passedMiliseconds = this.currentTime().getTime() - this.startTime.getTime();
-		let passedSeconds = Math.round(passedMiliseconds/1000);
+		let passedSeconds = this.startTime.secondsUntilNow();
 		
-		this.remainingSeconds = this.timebox.seconds - passedSeconds;
-		this.remainingTime = 'Remaining ' + this.remainingSeconds + " seconds";
-		this.percentsRemaining = Math.round(this.remainingSeconds / this.timebox.seconds * 100)+'%';
+		this.remainingDuration = this.timebox.minusSeconds(passedSeconds);
+		this.remainingTime = 'Remaining time: ' + this.remainingDuration.getHumanReadableText();
+		this.percentsRemaining = Math.round(this.remainingDuration.percentOf(this.timebox))+'%';
 	}
 	
-	currentTime(): Date {
-		return new Date();
+	currentTime(): PointInTime {
+		return PointInTime.now();
 	}
 	
 	goBack(): void {

@@ -1,9 +1,9 @@
 <div>
 	<h2>Timeboxes</h2>
 	<ul class="timeboxes">
-		<a *ngFor="let timebox of timeboxes" [routerLink]="['/timebox', timebox.seconds]">
+		<a *ngFor="let timebox of timeboxes" [routerLink]="['/timebox', timebox.asSeconds()]">
 			<li	[class.selected]="timebox === selectedTimebox">
-				{{timebox.humanReadableText}}
+				{{timebox.getHumanReadableText()}}
 			</li>
 		</a>
 	</ul>
