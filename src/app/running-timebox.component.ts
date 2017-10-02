@@ -43,7 +43,8 @@ export class RunningTimeboxComponent implements OnInit{
 	}
 	
 	refreshRemainingTime(): void {
-		var passedSeconds = Math.round((this.currentTime()-this.startTime)/1000);
+		let passedMiliseconds = this.currentTime().getTime() - this.startTime.getTime();
+		let passedSeconds = Math.round(passedMiliseconds/1000);
 		
 		this.remainingSeconds = this.timebox.seconds - passedSeconds;
 		this.remainingTime = 'Remaining ' + this.remainingSeconds + " seconds";
