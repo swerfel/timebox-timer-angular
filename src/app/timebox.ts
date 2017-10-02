@@ -21,20 +21,23 @@ export class Timebox {
 	
 	private static toHumanReadableString(totalSeconds: number): string {
 		var seconds = totalSeconds % SECONDS_PER_MINUTE;
-		var remaining = Math.round(totalSeconds / SECONDS_PER_MINUTE);
+		var remaining = Math.floor(totalSeconds / SECONDS_PER_MINUTE);
+		console.log('sec: ' +seconds+' remaining: '+remaining);
 		
 		var minutes = remaining % MINUTES_PER_HOUR;
-		remaining = Math.round(remaining / MINUTES_PER_HOUR);
+		remaining = Math.floor(remaining / MINUTES_PER_HOUR);
+		console.log('min: ' +minutes+' remaining: '+remaining);
 		
 		var hours = remaining % HOURS_PER_DAY;
-		remaining = Math.round(remaining / HOURS_PER_DAY);
+		remaining = Math.floor(remaining / HOURS_PER_DAY);
+		console.log('h: ' +hours+' remaining: '+remaining);
 		
 		// assert seconds, minutes or hours > 0 => non empty string
 		return Timebox.toTextual(hours, 'Hour')+Timebox.toTextual(minutes, 'Minute')+ Timebox.toTextual(seconds, 'Second');
 	}
 	
 	private static trimValidating(rawSeconds: number): number {
-		var totalSeconds = Math.round(rawSeconds);
+		var totalSeconds = Math.floor(rawSeconds);
 		
 		if (totalSeconds >= MAX_DURATION_IN_SECONDS) {
 			console.warn('Timebox was trimmed to under 24 hours from ' + totalSeconds + ' seconds');

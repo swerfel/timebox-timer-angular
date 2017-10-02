@@ -3,7 +3,7 @@
 	<ul class="timeboxes">
 		<a *ngFor="let timebox of timeboxes" [routerLink]="['/timebox', timebox.seconds]">
 			<li	[class.selected]="timebox === selectedTimebox">
-				<span class="badge">{{timebox.amount}}</span> {{timebox.unit}}
+				{{timebox.humanReadableText}}
 			</li>
 		</a>
 	</ul>
