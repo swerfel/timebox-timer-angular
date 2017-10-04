@@ -1,9 +1,14 @@
 <div *ngIf="timebox">
-	<h2>Started timebox of {{timebox.getHumanReadableText()}}</h2>
-	{{remainingTime}}
 	<div class="w3-container">
+		<h2>Timebox: {{timebox.getHumanReadableText()}}</h2>
+		
+		Remaining: {{remainingDuration.getHumanReadableText()}}
 		<div class="w3-light-grey">
-			<div class="progressbar w3-blue" [style.width]="percentsRemaining"></div>
+			<div class="progressbar" 
+				[class.w3-blue]="remainingInPercentsValue > 20" 
+				[class.w3-yellow]="remainingInPercentsValue > 5 && remainingInPercentsValue <= 20"
+				[class.w3-red]="remainingInPercentsValue <= 5"
+				[style.width]="remainingInPercents"></div>
 		</div> 
 	</div>
 </div>

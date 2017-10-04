@@ -20,9 +20,9 @@ const TIMEOUT_OFFSET_IN_SECONDS = 60;
 export class RunningTimeboxComponent implements OnInit{
 	timebox: Timebox;
 	startTime: PointInTime;
-	remainingTime: string;
 	remainingDuration: Duration;
-	percentsRemaining: string;
+	remainingInPercentsValue: number;
+	remainingInPercents: string;
 	
 	constructor(
 		private timeboxService: TimeboxService,
@@ -48,8 +48,8 @@ export class RunningTimeboxComponent implements OnInit{
 		let passedSeconds = this.startTime.secondsUntilNow();
 		
 		this.remainingDuration = this.timebox.minusSeconds(passedSeconds);
-		this.remainingTime = 'Remaining time: ' + this.remainingDuration.getHumanReadableText();
-		this.percentsRemaining = Math.round(this.remainingDuration.percentOf(this.timebox))+'%';
+		this.remainingInPercentsValue = Math.round(this.remainingDuration.percentOf(this.timebox))
+		this.remainingInPercents = this.remainingInPercentsValue + '%';
 	}
 	
 	currentTime(): PointInTime {
