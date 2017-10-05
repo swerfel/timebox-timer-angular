@@ -6,12 +6,12 @@ import { TimeboxService } from './timebox.service';
 
 
 @Component({
-  selector: 'default-timeboxes',
-  templateUrl: './default-timeboxes.component.html',
-  styleUrls: ['./default-timeboxes.component.css'],
+  selector: 'timebox-selector',
+  templateUrl: './timebox-selector.component.html',
+  styleUrls: ['./timebox-selector.component.css'],
   providers: [ TimeboxService ]
 })
-export class DefaultTimeboxesComponent implements OnInit { 
+export class TimeboxSelectorComponent implements OnInit { 
   timeboxes: Timebox[];
   selectedTimebox: Timebox;
   
