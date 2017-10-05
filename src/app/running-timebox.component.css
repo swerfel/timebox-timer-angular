@@ -1,7 +1,8 @@
 
 .progress {
-	height: 100px;
+	height: 200px;
 	position: relative;
+	background-color: #f8f9fa;
 }
 .progress-bar {
 	position: absolute;
@@ -9,13 +10,13 @@
 }
 /* red blinking */
 .expired-timebox {
-  animation: expired-animation 2s steps(40, start) infinite;
-  -webkit-animation: expired-animation 2s steps(40, start) infinite;
+  animation: expired-animation 2s steps(40, start) 20;
+  -webkit-animation: expired-animation 2s steps(40, start) 20;
 }
 @keyframes expired-animation {
   to {
     background-color: red;
-	color: light-gray;
+	color: white;
   }
 }
 @-webkit-keyframes expired-animation {

@@ -75,6 +75,10 @@ export class Duration {
 		return this.miliseconds / other.miliseconds * 100;
 	}
 	
+	doubled(): Duration {
+		return Duration.ofMiliseconds(this.miliseconds * 2);
+	}
+	
 	private static toTextual(amount: number, unit: string): string {
 		if (amount === 0)
 			return '';

@@ -43,14 +43,16 @@ export class RunningTimeboxComponent implements OnInit{
 		this.timebox = newTimebox;
 		this.startTime = this.currentTime();
 		this.refreshRemainingTime();
-		setInterval(() => { this.refreshRemainingTime() }, 100)
+		let intervalHandle = setInterval(() => { this.refreshRemainingTime() }, 100)
+		// stop after the timeout run after a second time
+		setTimeout(() => {clearInterval(intervalHandle);}, this.timebox.doubled().asMiliseconds());
 	}
 	
 	refreshRemainingTime(): void {		
 		this.remainingDuration = this.timebox.minus(this.startTime.durationUntilNow());
 		this.remainingInPercentsValue = Math.max(0, this.remainingDuration.percentOf(this.timebox));
 		this.remainingInPercents = this.remainingInPercentsValue + '%';
-		this.heightValue = Math.max(1, Math.min(100, Math.pow(110 - this.remainingInPercentsValue,4) / 1000000))
+		this.heightValue = Math.max(1, 2*Math.min(100, Math.pow(110 - this.remainingInPercentsValue,4) / 1000000))
 		
 		let redValue = this.toColor(120 - this.remainingInPercentsValue*3.5);
 		let greenValue = this.toColor(this.remainingInPercentsValue * 8);
