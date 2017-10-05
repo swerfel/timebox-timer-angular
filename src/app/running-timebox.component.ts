@@ -46,7 +46,7 @@ export class RunningTimeboxComponent implements OnInit{
 	
 	refreshRemainingTime(): void {		
 		this.remainingDuration = this.timebox.minus(this.startTime.durationUntilNow());
-		this.remainingInPercentsValue = this.remainingDuration.percentOf(this.timebox);
+		this.remainingInPercentsValue = Math.max(0, this.remainingDuration.percentOf(this.timebox));
 		this.remainingInPercents = this.remainingInPercentsValue + '%';
 	}
 	
