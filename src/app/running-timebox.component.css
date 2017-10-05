@@ -18,4 +18,9 @@ button:disabled {
 }
 .progressbar {
 	height: 100px;
+	position: relative;
+}
+.progress {
+	position: absolute;
+	bottom: 0px;
 }
