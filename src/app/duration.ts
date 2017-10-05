@@ -17,14 +17,14 @@ export class Duration {
 	}
 	
 	getSeconds(): number {
-		return this.asSeconds() % SECONDS_PER_MINUTE;
+		return Math.floor(Math.abs(this.miliseconds) / MILISECONDS_PER_SECOND) % SECONDS_PER_MINUTE;
 	}
 	
 	getMinutes(): number {
-		return Math.floor( this.miliseconds / MILISECONDS_PER_MINUTE) % MINUTES_PER_HOUR;
+		return Math.floor( Math.abs(this.miliseconds) / MILISECONDS_PER_MINUTE) % MINUTES_PER_HOUR;
 	}
 	getHours(): number {
-		return Math.floor( this.miliseconds / MILSECONDS_PER_HOUR) % HOURS_PER_DAY;
+		return Math.floor( Math.abs(this.miliseconds) / MILSECONDS_PER_HOUR) % HOURS_PER_DAY;
 	}
 	
 	asSeconds(): number {
@@ -53,7 +53,14 @@ export class Duration {
 		var hours = this.getHours();
 		
 		// assert seconds, minutes or hours > 0 => non empty string
-		return Duration.toTextual(hours, 'Hour')+Duration.toTextual(minutes, 'Minute')+ Duration.toTextual(seconds, 'Second');
+		let asString = Duration.concat(
+								Duration.toTextual(hours, 'Hour'),
+								Duration.toTextual(minutes, 'Minute'),
+								Duration.toTextual(seconds, 'Second')
+							);
+		if (this.miliseconds < 0)
+			return '-' + asString;
+		return asString;
 	}
 	
 	minus(other: Duration) {
@@ -72,7 +79,17 @@ export class Duration {
 		if (amount === 0)
 			return '';
 		if (amount === 1)
-			return ' ' + amount + ' ' + unit;
-		return ' ' + amount + ' ' + unit + 's'; // plural
+			return amount + ' ' + unit;
+		return amount + ' ' + unit + 's'; // plural
+	}
+	
+	private static concat(hours: string, minutes: string, seconds: string): string {
+		if (hours)
+			return hours + ' ' + minutes + ' ' +seconds;
+		if (minutes)
+			return minutes + ' ' +seconds;
+		if (seconds)
+			return seconds;
+		return '0 Seconds'
 	}
 }

@@ -6,6 +6,8 @@ describe('Duration', () => {
 	let zeroHMSMS = 1/*day*/ * 24 * 60 * 60 * 1000; 
 	let midleHMSMS = ((12*60+30)*60+30)*1000+500; // 12h,30min,30sec,500ms
 	let maxHMSMS = ((23*60+59)*60+59)*1000+999; // 23h,59min,59sec,999ms
+	let negative =  -(((1*60+2)*60+3)*1000+4); // -1h,2min,3sec,4ms
+	let verySmall =  123; // 123ms
 
 
 	it('return correct seconds', () => {
@@ -14,6 +16,8 @@ describe('Duration', () => {
 		expect(seconds(zeroHMSMS)).toBe(0); 
 		expect(seconds(midleHMSMS)).toBe(30);  
 		expect(seconds(maxHMSMS)).toBe(59); 
+		expect(seconds(negative)).toBe(3); 
+		expect(seconds(verySmall)).toBe(0); 
 	});
 	
 	it('return correct minutes', () => {
@@ -22,6 +26,8 @@ describe('Duration', () => {
 		expect(minutes(zeroHMSMS)).toBe(0); 
 		expect(minutes(midleHMSMS)).toBe(30); 
 		expect(minutes(maxHMSMS)).toBe(59); 
+		expect(minutes(negative)).toBe(2); 
+		expect(minutes(verySmall)).toBe(0); 
 	});
 	
 	it('return correct hours', () => { 
@@ -30,6 +36,8 @@ describe('Duration', () => {
 		expect(hours(zeroHMSMS)).toBe(0); 
 		expect(hours(midleHMSMS)).toBe(12); 
 		expect(hours(maxHMSMS)).toBe(23); 
+		expect(hours(negative)).toBe(1); 
+		expect(hours(verySmall)).toBe(0); 
 	});
 	
 	it('computes correct difference', () => {
@@ -41,9 +49,11 @@ describe('Duration', () => {
 	it('create a human readable string', () => {
 		// TODO remove leading space!
 		let text = function(miliseconds: number) { return Duration.ofMiliseconds(miliseconds).getHumanReadableText() };
-		expect(text(timestampDuration)).toBe(' 13 Hours 36 Minutes 56 Seconds'); 
-		expect(text(zeroHMSMS)).toBe(''); 
-		expect(text(midleHMSMS)).toBe(' 12 Hours 30 Minutes 30 Seconds'); 
-		expect(text(maxHMSMS)).toBe(' 23 Hours 59 Minutes 59 Seconds'); 
+		expect(text(timestampDuration)).toBe('13 Hours 36 Minutes 56 Seconds'); 
+		expect(text(zeroHMSMS)).toBe('0 Seconds'); 
+		expect(text(midleHMSMS)).toBe('12 Hours 30 Minutes 30 Seconds'); 
+		expect(text(maxHMSMS)).toBe('23 Hours 59 Minutes 59 Seconds'); 
+		expect(text(negative)).toBe('-1 Hour 2 Minutes 3 Seconds'); 
+		expect(text(verySmall)).toBe('0 Seconds'); 
 	});
 });
