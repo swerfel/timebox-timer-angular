@@ -58,10 +58,14 @@ export class Duration {
 								Duration.toTextual(minutes, 'Minute'),
 								Duration.toTextual(seconds, 'Second')
 							);
-		if (this.miliseconds < 0)
+		if (this.isNegative())
 			return '-' + asString;
 		return asString;
 	}
+  
+  isNegative(): boolean {
+    return this.miliseconds < 0;
+  }
 	
 	minus(other: Duration) {
 		return Duration.ofMiliseconds(this.miliseconds - other.miliseconds);

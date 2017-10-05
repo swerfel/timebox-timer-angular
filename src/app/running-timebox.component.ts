@@ -1,12 +1,13 @@
 import 'rxjs/add/operator/switchMap';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit }        from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
+import { Title }                    from '@angular/platform-browser';
 
-import { Timebox } from './timebox';
-import { PointInTime } from './point-in-time';
-import { Duration } from './duration';
+import { Timebox }        from './timebox';
+import { PointInTime }    from './point-in-time';
+import { Duration }       from './duration';
 import { TimeboxService } from './timebox.service';
 
 
@@ -29,13 +30,15 @@ export class RunningTimeboxComponent implements OnInit{
 	constructor(
 		private timeboxService: TimeboxService,
 		private route: ActivatedRoute,
-		private location: Location
+		private location: Location,
+    private titleService: Title 
 	) {}
 	
 	ngOnInit(): void {
 		this.route.paramMap
 			.switchMap((params: ParamMap) => this.timeboxService.getTimeboxBySeconds(+params.get('durationInSeconds')))
 			.subscribe(timebox => this.startTimebox(timebox));
+    this.titleService.setTitle('Timebox Timer');
 	}
 	
 	startTimebox(newTimebox: Timebox): void {
@@ -58,6 +61,11 @@ export class RunningTimeboxComponent implements OnInit{
 		let greenValue = this.toColor(this.remainingInPercentsValue * 8);
 		let blueValue = 0;
 		this.remainingColor = 'rgb(' + redValue + ',' + greenValue + ',' + blueValue + ')';
+    
+    if(this.remainingDuration.isNegative())
+      this.titleService.setTitle('Timebox Timer');
+    else
+      this.titleService.setTitle(this.remainingDuration.getHumanReadableText() + ' remaining');
 	}
 	
 	toColor(percentValue: number) {
