@@ -24,4 +24,8 @@ export class PointInTime{
 	secondsUntilNow(): number {
 		return PointInTime.now().sinceEpoch.deltaToInSeconds(this.sinceEpoch);
 	}
+	
+	durationUntilNow(): Duration {
+		return PointInTime.now().sinceEpoch.minus(this.sinceEpoch);
+	}
 }

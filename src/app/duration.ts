@@ -56,8 +56,12 @@ export class Duration {
 		return Duration.toTextual(hours, 'Hour')+Duration.toTextual(minutes, 'Minute')+ Duration.toTextual(seconds, 'Second');
 	}
 	
+	minus(other: Duration) {
+		return Duration.ofMiliseconds(this.miliseconds - other.miliseconds);
+	}
+	
 	minusSeconds(seconds: number): Duration {
-		return Duration.ofMiliseconds(this.miliseconds - seconds * MILISECONDS_PER_SECOND);
+		return this.minus(Duration.ofMiliseconds(seconds * MILISECONDS_PER_SECOND));
 	}
 	
 	percentOf(other: Duration): number {

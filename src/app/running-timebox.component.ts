@@ -41,14 +41,12 @@ export class RunningTimeboxComponent implements OnInit{
 		this.timebox = newTimebox;
 		this.startTime = this.currentTime();
 		this.refreshRemainingTime();
-		setInterval(() => { this.refreshRemainingTime() }, 1000)
+		setInterval(() => { this.refreshRemainingTime() }, 100)
 	}
 	
-	refreshRemainingTime(): void {
-		let passedSeconds = this.startTime.secondsUntilNow();
-		
-		this.remainingDuration = this.timebox.minusSeconds(passedSeconds);
-		this.remainingInPercentsValue = Math.round(this.remainingDuration.percentOf(this.timebox))
+	refreshRemainingTime(): void {		
+		this.remainingDuration = this.timebox.minus(this.startTime.durationUntilNow());
+		this.remainingInPercentsValue = this.remainingDuration.percentOf(this.timebox);
 		this.remainingInPercents = this.remainingInPercentsValue + '%';
 	}
 	

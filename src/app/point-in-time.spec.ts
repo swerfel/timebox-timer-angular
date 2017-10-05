@@ -16,4 +16,8 @@ describe('get seconds', () => {
 	it('computes seconds until now', () => {
 		expect(earlier.secondsUntilNow()).toBe(59);
 	});
+	
+	it ('computes duration until now', () => {
+		expect(earlier.durationUntilNow().asMiliseconds()).toBe(59*1000);
+	});
 });
