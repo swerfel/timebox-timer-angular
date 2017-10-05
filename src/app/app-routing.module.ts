@@ -5,8 +5,6 @@ import { DefaultTimeboxesComponent } from './default-timeboxes.component'
 import { RunningTimeboxComponent } from './running-timebox.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: '/timeboxes', pathMatch: 'full' },
-	{ path: 'timeboxes',  component: DefaultTimeboxesComponent },
 	{ path: 'timebox/:durationInSeconds', component: RunningTimeboxComponent }
 ];
      

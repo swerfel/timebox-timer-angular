@@ -23,6 +23,8 @@ export class RunningTimeboxComponent implements OnInit{
 	remainingDuration: Duration;
 	remainingInPercentsValue: number;
 	remainingInPercents: string;
+	remainingColor: string;
+	heightValue: number;
 	
 	constructor(
 		private timeboxService: TimeboxService,
@@ -48,6 +50,16 @@ export class RunningTimeboxComponent implements OnInit{
 		this.remainingDuration = this.timebox.minus(this.startTime.durationUntilNow());
 		this.remainingInPercentsValue = Math.max(0, this.remainingDuration.percentOf(this.timebox));
 		this.remainingInPercents = this.remainingInPercentsValue + '%';
+		this.heightValue = Math.max(1, Math.min(100, Math.pow(110 - this.remainingInPercentsValue,4) / 1000000))
+		
+		let redValue = this.toColor(120 - this.remainingInPercentsValue*3.5);
+		let greenValue = this.toColor(this.remainingInPercentsValue * 8);
+		let blueValue = 0;
+		this.remainingColor = 'rgb(' + redValue + ',' + greenValue + ',' + blueValue + ')';
+	}
+	
+	toColor(percentValue: number) {
+		return 255 * Math.max(0, Math.min(100, percentValue)) / 100;
 	}
 	
 	currentTime(): PointInTime {

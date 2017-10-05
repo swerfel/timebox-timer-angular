@@ -1,10 +1,25 @@
-<div>
-	<h2>Timeboxes</h2>
-	<ul class="timeboxes">
-		<a *ngFor="let timebox of timeboxes" [routerLink]="['/timebox', timebox.asSeconds()]">
-			<li	[class.selected]="timebox === selectedTimebox">
-				{{timebox.getHumanReadableText()}}
-			</li>
-		</a>
-	</ul>
+
+
+<div class="pb-2">
+	<div class="container-fluid">
+		<button 
+				type="button" 
+				class="btn btn-secondary" 
+				*ngFor="let timebox of timeboxes" 
+				[routerLink]="['/timebox', timebox.asSeconds()]" 
+				[class.active]="timebox === selectedTimebox"
+		>
+			{{timebox.getHumanReadableText()}}
+		</button>
+		<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+			Custom
+		</button>
+		<div class="collapse" id="collapseExample">
+			<div class="card card-body">
+				not yet implemented
+			</div>
+		</div>
+	</div>
 </div>
+
+<!--  [class.selected]="timebox === selectedTimebox" -->

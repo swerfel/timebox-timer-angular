@@ -1,26 +1,29 @@
 
-button {
-  margin-top: 20px;
-  font-family: Arial;
-  background-color: #eee;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer; cursor: hand;
-}
-button:hover {
-  background-color: #cfd8dc;
-}
-button:disabled {
-  background-color: #eee;
-  color: #ccc; 
-  cursor: auto;
-}
-.progressbar {
+.progress {
 	height: 100px;
 	position: relative;
 }
-.progress {
+.progress-bar {
 	position: absolute;
 	bottom: 0px;
+}
+/* red blinking */
+.expired-timebox {
+  animation: expired-animation 2s steps(40, start) infinite;
+  -webkit-animation: expired-animation 2s steps(40, start) infinite;
+}
+@keyframes expired-animation {
+  to {
+    background-color: red;
+	color: light-gray;
+  }
+}
+@-webkit-keyframes expired-animation {
+  to {
+    background-color: red;
+	color: white;
+  }
+}
+.centered {
+	margin: auto;
 }

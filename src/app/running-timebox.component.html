@@ -1,15 +1,20 @@
-<div *ngIf="timebox">
-	<div class="w3-container">
-		<h2>Timebox: {{timebox.getHumanReadableText()}}</h2>
+<div *ngIf="timebox" class="container-fluid">
+	<div class="jumbotron">
+		<h3>Timebox: {{timebox.getHumanReadableText()}}
+		<br/>
+		<small class="text-muted">Remaining: {{remainingDuration.getHumanReadableText()}}</small>
+		</h3>
 		
-		Remaining: {{remainingDuration.getHumanReadableText()}}
-		<div class="w3-light-grey" class="progressbar">
-			<div class="progress"
-				[style.height.px]="100-remainingInPercentsValue"
-				[class.w3-blue]="remainingInPercentsValue > 20" 
-				[class.w3-yellow]="remainingInPercentsValue > 5 && remainingInPercentsValue <= 20"
-				[class.w3-red]="remainingInPercentsValue <= 5"
-				[style.width]="remainingInPercents"></div>
+		
+		<div class="progress" [class.expired-timebox]="remainingInPercentsValue <= 0">
+			<div class="progress-bar"
+				[style.height.px]="heightValue"
+				[style.background-color]="remainingColor" 
+				[style.width]="remainingInPercents">
+			</div>
+			<h2 *ngIf="remainingInPercentsValue <= 0" class="centered">
+				Timebox expired!
+			</h2>
 		</div> 
 	</div>
 </div>

@@ -4,10 +4,7 @@ import { Component } from '@angular/core';
   selector: 'timebox-timer-app',
   template: `
     <h1>{{title}}</h1>
-	<nav>
-		<a routerLink="/timeboxes" routerLinkActive="active">Timeboxes</a>
-	</nav>
-    
+    <default-timeboxes></default-timeboxes>
 	<router-outlet></router-outlet>
   `,
   styleUrls: ['./app.component.css']
