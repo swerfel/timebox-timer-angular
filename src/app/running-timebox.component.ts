@@ -61,11 +61,12 @@ export class RunningTimeboxComponent implements OnInit{
 	}
   
   startContinualRefresh(): void {
+    this.stopContinualRefresh(); // start previous refresh
     this.refreshRemainingTime();
 		this.intervalHandle = setInterval(() => { this.refreshRemainingTime() }, 100);
   }
   
-  stopContinualRefresh():void {
+  stopContinualRefresh(): void {
     if (this.intervalHandle)
       clearInterval(this.intervalHandle);
   }
