@@ -26,6 +26,7 @@ export class RunningTimeboxComponent implements OnInit{
 	remainingInPercents: string;
 	remainingColor: string;
 	heightValue: number;
+  intervalHandle: number;
 	
 	constructor(
 		private timeboxService: TimeboxService,
@@ -38,18 +39,40 @@ export class RunningTimeboxComponent implements OnInit{
 		this.route.paramMap
 			.switchMap((params: ParamMap) => this.timeboxService.getTimeboxBySeconds(+params.get('durationInSeconds')))
 			.subscribe(timebox => this.startTimebox(timebox));
-    this.titleService.setTitle('Timebox Timer');
+    this.resetTitle();
 	}
+  
+  resetTitle(): void {
+    this.titleService.setTitle('Timebox-Timer');
+  }
+  
+  ngOnDestroy(): void {
+    this.stopContinualRefresh();
+    this.resetTitle();
+  }
 	
 	startTimebox(newTimebox: Timebox): void {
 		console.log('Starting timebox of '+newTimebox.getHumanReadableText());
 		this.timebox = newTimebox;
 		this.startTime = this.currentTime();
-		this.refreshRemainingTime();
-		let intervalHandle = setInterval(() => { this.refreshRemainingTime() }, 100)
-		// stop after the timeout run after a second time
-		setTimeout(() => {clearInterval(intervalHandle);}, this.timebox.doubled().asMiliseconds());
+    
+		this.startContinualRefresh();
+		this.stopRefreshAfterDoubleTimebox();
 	}
+  
+  startContinualRefresh(): void {
+    this.refreshRemainingTime();
+		this.intervalHandle = setInterval(() => { this.refreshRemainingTime() }, 100);
+  }
+  
+  stopContinualRefresh():void {
+    if (this.intervalHandle)
+      clearInterval(this.intervalHandle);
+  }
+  
+  stopRefreshAfterDoubleTimebox(): void {
+    setTimeout(() => { this.stopContinualRefresh() }, this.timebox.doubled().asMiliseconds());
+  }
 	
 	refreshRemainingTime(): void {		
 		this.remainingDuration = this.timebox.minus(this.startTime.durationUntilNow());
@@ -63,7 +86,7 @@ export class RunningTimeboxComponent implements OnInit{
 		this.remainingColor = 'rgb(' + redValue + ',' + greenValue + ',' + blueValue + ')';
     
     if(this.remainingDuration.isNegative())
-      this.titleService.setTitle('Timebox Timer');
+      this.resetTitle();
     else
       this.titleService.setTitle(this.remainingDuration.getHumanReadableText() + ' remaining');
 	}
@@ -74,9 +97,5 @@ export class RunningTimeboxComponent implements OnInit{
 	
 	currentTime(): PointInTime {
 		return PointInTime.now();
-	}
-	
-	goBack(): void {
-		this.location.back();
 	}
 }
