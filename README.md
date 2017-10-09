@@ -1,5 +1,8 @@
 # Timebox-Timer
 
+Small online tool to visualize timeboxes.
+It is deployed and can be tested here: https://swerfel.000webhostapp.com/timeboxtimer/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.4.
 
 ## Development server
